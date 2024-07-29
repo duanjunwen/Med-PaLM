@@ -22,11 +22,12 @@ def main():
     os.environ['WORLD_SIZE']='1'
     os.environ['MASTER_ADDR']='localhost'
     os.environ['MASTER_PORT']='8080'
-    # dist.init_process_group(backend="nccl", timeout=timedelta(hours=24))
+    dist.init_process_group(backend="nccl", timeout=timedelta(hours=24))
     # dist.init_process_group(backend="nccl", timeout=timedelta(hours=24))
     set_seed(8192)
     # device = torch.cuda.current_device  # device cuda:0
     dtype = to_torch_dtype(cfg.dtype)
+    torch._dynamo.config.optimize_ddp = False
 
     model = MedPalm()
 
@@ -74,6 +75,8 @@ def main():
                 print(f"module.grad_checkpointing {module.grad_checkpointing}")
         print(f"num_ckpt_blocks {num_ckpt_blocks}")
 
+    model.train()
+    
     performance_evaluator = Evaluator(stdit_weight_memory=format_numel(model_numel*2),total_weight_memory=format_numel(model_numel*2))
     performance_evaluator.on_fit_start()
     for epoch in range(0, cfg.epochs):
@@ -96,6 +99,7 @@ def main():
             performance_evaluator.start_new_iter()
     performance_evaluator.on_fit_end()
 #   ENV: Sus
+# C:\Users\duanj\miniconda3\envs\SustainableLLM\Lib\site-packages
 # python setup.py install
 # python .\script\train_benchmark.py .\configs\medpalm2\train\train-v1.py
 if __name__ == "__main__":

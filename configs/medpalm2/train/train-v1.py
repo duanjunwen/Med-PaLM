@@ -22,4 +22,4 @@ grad_clip = 1.0
 grad_accm = 2
 
 steps = 4
-num_ckpt_blocks = 18 # 0-18
+num_ckpt_blocks = 0 # 0-18

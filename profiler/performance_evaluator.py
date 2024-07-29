@@ -316,7 +316,7 @@ class PerformanceEvaluator:
         self.step_cnt = 0 # The number of benchmarked iterations, should be args.num_steps - args.ignore_steps
         # When opening grad accum, the number of calling optimizer.step might be smaller than self.step_cnt
         self.optimizer_update_cnt = 0
-        self.stdit_weight_memory = stdit_weight_memory
+        self.model_weight_memory = stdit_weight_memory
         self.total_weight_memory = total_weight_memory
         self.grad_memory = stdit_weight_memory
 
@@ -500,7 +500,7 @@ class PerformanceEvaluator:
         activation_memory = peak_memory - final_allocated_memory - self.grad_memory
         print(
             f"Memory Usage Breakdown: "
-            f"Stdit Weight {self.stdit_weight_memory :.3f} GB,"
+            f"Stdit Weight {self.model_weight_memory :.3f} GB,"
             f"Total Weight {self.total_weight_memory :.3f} GB, "
             f"Grad {self.grad_memory:.3f} GB, "
             f"Optimizer {optimizer_memory/1024**3:.3f} GB, "
