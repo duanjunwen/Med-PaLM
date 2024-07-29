@@ -1,7 +1,7 @@
 import torch
 from transformers import AutoTokenizer, CLIPProcessor
 
-from medpalm.transformer import (
+from medpalm.models.transformer import (
     AutoregressiveWrapper,
     Decoder,
     Encoder,

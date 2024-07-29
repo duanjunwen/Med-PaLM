@@ -13,7 +13,7 @@ import torch.nn.functional as F
 from einops import pack, rearrange, reduce, repeat, unpack
 from torch import Tensor, einsum, nn
 
-from medpalm.attend import Attend, Intermediates
+from medpalm.models.attend import Attend, Intermediates
 
 
 def exists(val):
